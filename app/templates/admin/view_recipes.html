@@ -1,0 +1,45 @@
+{% extends "header.html" %}
+{% set page_title = "Sukurti receptai" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Sukurti receptai</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Sukurti receptai</div>
+                {% if recipes %}
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Pavadinimas</th>
+                            <th scope="col">SEO pavadinimas</th>
+                            <th scope="col">Sukūrimo data</th>
+                            <th scope="col">Sukūrė</th>
+                            <th scope="col">Žingsnių kiekis</th>
+                            <th scope="col">Veiksmai</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recipe in recipes %}
+                            <tr>
+                                <th scope="row">{{ recipe.recipe_title }}</th>
+                                <td>{{ recipe.recipe_seo_title }}</td>
+                                <td>{{ recipe.recipe_date_created }}</td>
+                                <td>{{ recipe.user.user_username }}</td>
+                                <td>{{ recipe.step_count }}</td>
+                                <td><a href="{{ url_for('admin.edit_recipe', seo_title=recipe.recipe_seo_title) }}">Redaguoti</a> <a href="{{ url_for('admin.delete_recipe', seo_title=recipe.recipe_seo_title) }}">Ištrinti</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>Nebuvo rasta jokių receptų.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

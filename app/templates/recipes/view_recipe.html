@@ -1,0 +1,52 @@
+{% extends "header.html" %}
+{% set page_title = "Peržiūrėti receptą" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Peržiūrėti receptą - {{ recipe.recipe_title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <p>{{ recipe.recipe_description }}</p>
+        <div class="col-md-6">
+            <p>Receptas sukurtas: {{ recipe.recipe_date_created }}</p>
+            <p>Receptą sukūrė: {{ recipe.user.user_username }}</p>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Pavadinimas</td>
+                        <td>Matavimo vienetas</td>
+                        <td>Kiekis</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ingre in recipe.recipe_ingredient_collection %}
+                        <tr>
+                            <td>{{ ingre.ingredient.ingredient_title }}</td>
+                            <td>{{ ingre.ingredient.ingredient_unit }}</td>
+                            <td>{{ ingre.recipe_ingredient_quantity }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Receptas</div>
+                <ul class="list-group list-group-flush">
+                    {% for step in recipe.recipe_step_collection %}
+                        <li class="list-group-item">
+                            <p>{{ step.recipe_step_title }}</p>
+                            <p>{{ step.recipe_step_description }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "header.html" %}
+{% set page_title = "Receptai" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Ieškoti receptų</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <form action="", method="POST" novalidate>
+                {{ recipe_creator_form.hidden_tag() }}
+                <p>Pasirinkite, kurio receptų kūrėjo receptų ieškoti</p>
+                {{ recipe_creator_form.recipe_creators(class_="form-control mb-2") }}
+                {{ recipe_creator_form.filter(class_="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <form action="", method="POST" novalidate>
+                {{ form.hidden_tag() }}
+                    <div class="row">
+                        {% for item in form.items %}
+                        <div class="col-md-4">
+                            {{ item.item.label(class_="form-label") }}
+                            <div class="input-group-text">{{ item.unit.label.text }}</div>
+                            {{ item.item(class_="form-control")}}
+                            {{ item.hidden_seo() }}
+                            <div class="col-3">
+                                {% for error in item.item.errors %}
+                                <span class="form-text fw-light text-danger">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {{ form.search(class_="btn btn-primary") }}
+                <a href="{{ url_for('recipes.index') }}">Panaikinti filtrus</a>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if extra_message %}
+                <p>{{ extra_message }}</p>
+            {% endif %}
+            <div class="card mb-5">
+                <div class="card-header text-center fs-2">Galimi receptai</div>
+                {% if recipes %}
+                <ul class="list-group list-group-flush">
+                    {% for recipe in recipes %}
+                        <li class="list-group-item">
+                            <p>Pavadinimas: {{ recipe.recipe_title }}</p>
+                            <p>Įkėlė: {{ recipe.user.user_username }}</p>
+                            <p>Trumpas aprašymas: {{ recipe.recipe_desciption_exerpt }}</p>
+                            <p>Įkėlimo data: {{ recipe.recipe_date_created }}</p>
+                            <p>Reikalingi ingredientai:
+                                <ul>
+                                    {% for ing in recipe.recipe_ingredient_collection %}
+                                        <li>
+                                        <!-- If we are showing filtered results -->
+                                        {% if item_filters %}
+                                                <!-- If there the needed ingredient is selected by the user -->
+                                                {% if item_filters[ing.ingredient.ingredient_seo_title] %}
+                                                    <!-- If some of the ingredients are still missing -->
+                                                    {% if ing.recipe_ingredient_quantity|float - item_filters[ing.ingredient.ingredient_seo_title]|float > 0 %}
+                                                        <p class="text-warning">{{ ing.ingredient.ingredient_title }} - {{ ing.recipe_ingredient_quantity|float }} {{ ing.ingredient.ingredient_unit }} trūksta - {{ ing.recipe_ingredient_quantity|float - item_filters[ing.ingredient.ingredient_seo_title]|float }} {{ ing.ingredient.ingredient_unit }}</p>
+                                                    <!-- If the user has all the ingredients -->
+                                                    {% else %}
+                                                        <span class="text-success">{{ ing.ingredient.ingredient_title }} - {{ ing.recipe_ingredient_quantity }} {{ ing.ingredient.ingredient_unit }}</span>
+                                                    {% endif %}
+                                                <!-- If user doesn't have needed ingredient -->
+                                                {% else %}
+                                                    <span class="text-danger">{{ ing.ingredient.ingredient_title }} - {{ ing.recipe_ingredient_quantity|float }} {{ ing.ingredient.ingredient_unit }} - trūksta visko</span>
+                                                {% endif %}
+                                        <!-- If we are showing unfiltered results -->
+                                        {% else %}
+                                            {{ ing.ingredient.ingredient_title }} - {{ ing.recipe_ingredient_quantity }} {{ ing.ingredient.ingredient_unit }}
+                                        {% endif %}
+                                        </li>
+                                    {% endfor %}</p>
+                                </ul>
+                            <a href="{{ url_for('recipes.view_recipe', seo_title=recipe.recipe_seo_title) }}">Peržiūrėti</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center">Atsiprašome, bet jokių receptų surasta nebuvo.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "header.html" %}
+{% set page_title = "Įmanomi ingredientai" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Įmanomi ingredientai</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Įmanomi ingredientai</div>
+                <ul class="list-group list-group-flush">
+                    {% for ingredient in ingredients.values() %}
+                        <li class="list-group-item">
+                            <p>Pavadinimas: {{ ingredient["title"] }}</p>
+                            {% if ingredient["description_exerpt"] != "" %}
+                                <p>Trumpas aprašymas: {{ ingredient["description_exerpt"] }}</p>
+                            {% endif %}
+                            <p>Įkėlimo data: {{ ingredient["date_uploaded"] }}</p>
+                            {% if ingredient["date_updated"] != ingredient["date_uploaded"] %}
+                                <p>Atnaujinimo data: {{ ingredient["date_updated"] }}</p>
+                            {% endif %}
+                            <a href="{{ url_for('recipes.view_ingredient', seo_title=ingredient['seo_title']) }}">Detaliau</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

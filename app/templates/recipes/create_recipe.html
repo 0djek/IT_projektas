@@ -1,0 +1,104 @@
+{% extends "header.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">{{ page_title }}</h1>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="", method="POST" novalidate>
+                {{ form.csrf_token() }}
+                <!-- NOTE: Main recipe info -->
+                <div class="row mb-5">
+                    <h3 class="text-center">Pagrindinė informacija</h3>
+                    <div class="col-md-6">
+                        {{ form.title.label(class_="form-label") }}
+                        {{ form.title(class_="form-control") }}
+                        {% for error in form.title.errors %}
+                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.seo_title.label(class_="form-label") }}
+                        {{ form.seo_title(class_="form-control") }}
+                        {% for error in form.seo_title.errors %}
+                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-12">
+                        {{ form.description_exerpt.label(class_="form-label") }}
+                        {{ form.description_exerpt(class_="form-control") }}
+                        {% for error in form.description_exerpt.errors %}
+                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-12">
+                        {{ form.description.label(class_="form-label") }}
+                        {{ form.description(class_="form-control") }}
+                        {% for error in form.description.errors %}
+                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- NOTE: Recipe steps -->
+                <div class="row mb-5">
+                    <h3 class="text-center">Recepto žingsniai</h3>
+                    {% for step in form.recipe_steps %}
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Žingsnis {{ step.order.data }}</h5>
+                                    <!-- {{ step.order() }} -->
+                                    <div class="col-md-6">
+                                        {{ step.title.label(class_="form-label") }}
+                                        {{ step.title(class_="form-control") }}
+                                        {% for error in step.title.errors %}
+                                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ step.seo_title.label(class_="form-label") }}
+                                        {{ step.seo_title(class_="form-control") }}
+                                        {% for error in step.seo_title.errors %}
+                                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{ step.step_description.label(class_="form-label") }}
+                                        {{ step.step_description(class_="form-control") }}
+                                        {% for error in step.step_description.errors %}
+                                            <span style="color: red;" class="form-text">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- NOTE: Recipe Ingredients -->
+                <div class="row mb-5">
+                    <h3 class="text-center">Recepto ingredientai</h3>
+                    {% for step in form.recipe_ingredients %}
+                        <div class="col-md-4 mb-3">
+                            <h5 class="card-title">Ingredientas {{ loop.index }}</h5>
+                            {{ step.ingredient.label(class_="form-label") }}
+                            {{ step.ingredient(class_="form-control") }}
+                            {% for error in step.ingredient.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                            {{ step.quantity.label(class_="form-label") }}
+                            {{ step.quantity(class_="form-control") }}
+                            {% for error in step.quantity.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {{ form.create(class_="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

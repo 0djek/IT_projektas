@@ -1,0 +1,55 @@
+{% extends "header.html" %}
+{% set page_title = "Sukurti naują ingredientą" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Sukurti naują ingredientą</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <div class="form-outline">
+                            {{ form.title.label(class_="form-label") }}
+                            {{ form.title(class_="form-control") }}
+                            {% for error in form.title.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-outline">
+                            {{ form.seo_title.label(class_="form-label") }}
+                            {{ form.seo_title(class_="form-control") }}
+                            {% for error in form.seo_title.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <div class="form-outline">
+                            {{ form.unit.label(class_="form-label") }}
+                            {{ form.unit(class_="form-control") }}
+                            {% for error in form.unit.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.create(class_="btn btn-primary") }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

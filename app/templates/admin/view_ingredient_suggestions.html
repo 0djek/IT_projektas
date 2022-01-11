@@ -1,0 +1,45 @@
+{% extends "header.html" %}
+{% set page_title = "Įmanomi ingredientai" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Ingredientų pasiūlymai</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Ingredientų pasiūlymai</div>
+                {% if ingredients %}
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pavadinimas</th>
+                                <th scope="col">SEO pavadinimas</th>
+                                <th scope="col">Matavimo vienetai</th>
+                                <th scope="col">Pasiūlyta</th>
+                                <th scope="col">Pasiūlė</th>
+                                <th scope="col">Veiksmai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ingredient in ingredients %}
+                                <tr>
+                                    <th scope="row">{{ ingredient.suggested_ingredient_title }}</th>
+                                    <td>{{ ingredient.suggested_ingredient_seo_title }}</td>
+                                    <td>{{ ingredient.suggested_ingredient_unit }}</td>
+                                    <td>{{ ingredient.suggested_ingredient_date_suggested }}</td>
+                                    <td>{{ ingredient.user.user_username }}</td>
+                                    <td><a href="{{ url_for('admin.approve_ingredient_suggestion', seo_title=ingredient.suggested_ingredient_seo_title) }}">Patvirtinti</a> <a href="{{ url_for('admin.disapprove_ingredient_suggestion', seo_title=ingredient.suggested_ingredient_seo_title) }}">Atšaukti</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Ingredientų pasiūlymų nerasta.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

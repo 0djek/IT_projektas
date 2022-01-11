@@ -1,0 +1,49 @@
+{% extends "header.html" %}
+{% set page_title = "Prisijungti" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Prisijungti</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.username.label(class_="form-label") }}
+                            {{ form.username(class_="form-control") }}
+                            {% for error in form.username.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.password.label(class_="form-label") }}
+                            {{ form.password(class_="form-control") }}
+                            {% for error in form.password.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.login(class_="btn btn-primary") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-info">Registruotis</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

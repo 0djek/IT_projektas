@@ -1,0 +1,43 @@
+{% extends "header.html" %}
+{% set page_title = "Įmanomi ingredientai" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Įmanomi ingredientai</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Įmanomi ingredientai</div>
+                {% if ingredients %}
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pavadinimas</th>
+                                <th scope="col">Matavimo vienetai</th>
+                                <th scope="col">Įkėlimo data</th>
+                                <th scope="col">Įkėlė</th>
+                                <th scope="col" colspan="2" class="text-center">Veiksmai</th>
+                            </tr>
+                        </thead><tbody>
+                            {% for ingredient in ingredients %}
+                                <tr>
+                                    <th scope="row">{{ ingredient.ingredient_title }}</th>
+                                    <td>{{ ingredient.ingredient_unit }}</td>
+                                    <td>{{ ingredient.ingredient_date_created }}</td>
+                                    <td>{{ ingredient.user.user_username }}</td>
+                                    <td><a href="{{ url_for('admin.edit_ingredient', seo_title=ingredient.ingredient_seo_title) }}">Redaguoti</a></td>
+                                    <td><a href="{{ url_for('admin.delete_ingredient', seo_title=ingredient.ingredient_seo_title) }}">Atšaukti</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Naujų ingredientų sukurta nebuvo.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

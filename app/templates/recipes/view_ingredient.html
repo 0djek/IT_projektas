@@ -1,0 +1,20 @@
+{% extends "header.html" %}
+{% set page_title = "Peržiūrėti ingredientą" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Ingredientas: {{ ingredient["title"] }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Pavadinimas: {{ ingredient["title"] }}</p>
+            <p>Aprašymas: {{ ingredient["description"] }}</p>
+            <p>Įkėlimo data: {{ ingredient["date_uploaded"] }}</p>
+            {% if ingredient["date_updated"] != ingredient["date_uploaded"] %}
+                <p>Atnaujinimo data: {{ ingredient["date_updated"] }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

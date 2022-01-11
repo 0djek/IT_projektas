@@ -1,0 +1,44 @@
+{% extends "header.html" %}
+{% set page_title = "Sukurti naują ingredientą" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Sukurti receptą</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="", method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.step_count.label(class_="form-label") }}
+                            {{ form.step_count(class_="form-control") }}
+                            {% for error in form.step_count.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.ingredient_count.label(class_="form-label") }}
+                            {{ form.ingredient_count(class_="form-control") }}
+                            {% for error in form.ingredient_count.errors %}
+                                <span style="color: red;" class="form-text">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            {{ form.create(class_="btn btn-primary") }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
