@@ -19,7 +19,7 @@ I wasn't able to complete the task succesfully, sadly. I didn't make the bonus t
 - Those values are used to connect to database
 
 # Got Mark
-Mark was 6. Also, I got the task to filter recipes by recipe creator nickname.
+Mark was 6. Also, I got the task to filter recipes by recipe creator nickname (included here).
 
 # Testing
 No tests were made, but might make later (need to learn them, ya know)
